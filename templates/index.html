@@ -35,14 +35,19 @@
                     <div class="navbar-nav ms-auto">
                         <a href="/" class="nav-item nav-link active">Home</a>
                         <a href="/our-team" class="nav-item nav-link">Our Team</a>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Register / Login</a>
-                            <div class="dropdown-menu bg-light rounded-0 m-0">
-                                <a href="/register" class="dropdown-item">Register</a>
-                                <a href="/login" class="dropdown-item">Login</a>
+                        {% if 'username' in session %}
+                            <a href="/logout" class="nav-item nav-link">Logout</a>
+                        {% else %}
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Register / Login</a>
+                                <div class="dropdown-menu bg-light rounded-0 m-0">
+                                    <a href="/register" class="dropdown-item">Register</a>
+                                    <a href="/login" class="dropdown-item">Login</a>
+                                </div>
                             </div>
-                        </div>
+                        {% endif %}
                     </div>
+                    
                 </div>
             </nav>
         </div>
