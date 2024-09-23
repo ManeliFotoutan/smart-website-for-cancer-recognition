@@ -209,4 +209,31 @@
 
 /*** Our Team End ***/
 
+/*** OTP ***/
+.otp-input-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px; 
+}
+.otp-input {
+    width: 50px;
+    text-align: center;
+    font-size: 24px;
+}
+.submit-btn {
+    background-color: #4F1E7B;
+    color: white;
+}
 
+h2 {
+    color: #4F1E7B;
+    text-align: center;
+}
+/***OTP End ***/
+
+.btn-custom {
+    background-color: #4F1E7B;
+    color: white; 
+    margin-bottom: 20px; 
+}

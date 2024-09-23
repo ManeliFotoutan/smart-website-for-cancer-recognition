@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Input - Cancer Recognition</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="../static/ico/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../static/ico/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../static/ico/favicon-16x16.png">
+    <link rel="manifest" href="../static/ico/site.webmanifest">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="../static/css/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div class="container-fluid bg-light sticky-top">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg bg-light navbar-light py-2 py-lg-0">
+                <a href="/" class="navbar-brand1">
+                    <img class="img img-fluid" src="static/img/Filoger.png" alt="Logo">
+                </a>
+                <a href="/" class="navbar-brand2">
+                    <img class="img img-fluid" src="static/img/CancerRecognition.png" alt="Logo">
+                </a>
+                <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
+                    data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto">
+                        <a href="/" class="nav-item nav-link">Home</a>
+                        <a href="/our-team" class="nav-item nav-link">Our Team</a>
+                        <a href="/register" class="nav-item nav-link">Register</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <h2>Enter OTP Code</h2>
+        <form action="/otp" method="POST" class="text-center">
+            {{ form.csrf_token }}
+            
+            <div class="otp-input-container">
+                <input type="text" name="otp1" maxlength="1" class="otp-input">
+                <input type="text" name="otp2" maxlength="1" class="otp-input">
+                <input type="text" name="otp3" maxlength="1" class="otp-input">
+                <input type="text" name="otp4" maxlength="1" class="otp-input">
+            </div>
+            <button type="submit" class="submit-btn btn">Submit</button>
+        </form>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/otp.js') }}"></script>
+</body>
+</html>
