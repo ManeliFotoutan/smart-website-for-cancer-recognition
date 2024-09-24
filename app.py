@@ -126,5 +126,21 @@ def logout():
     flash('You have been logged out.', 'success')
     return redirect(url_for('login'))
 
+@app.route('/input' , methods=['GET', 'POST'])
+@login_required
+def input():
+    #if request.method == "POST":
+        #features = []
+        # prediction = cancer_prediction(features) 
+        #return render_template('result.html', prediction= prediction)
+     
+    return render_template('input.html')
+@app.route('/result')
+@login_required
+def result():
+    return render_template("result.html")
+    
+
+
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
