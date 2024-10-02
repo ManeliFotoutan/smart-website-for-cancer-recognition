@@ -6,6 +6,7 @@ import os
 from functools import wraps
 from forms import UserForm, LoginForm, OTPForm  
 from OTP import send_code
+from model import cancer_prediction
 
 app = Flask(__name__)
 csrf = CSRFProtect(app)
@@ -120,7 +121,7 @@ def login():
         if user and check_password_hash(user.password, password):
             session['username'] = user.username
             flash('Login successful!', 'success')
-            return redirect(url_for('home'))
+            return redirect(url_for('input'))
         else:
             flash('Invalid username or password.', 'danger')
 
@@ -132,6 +133,53 @@ def logout():
     session.clear()
     flash('You have been logged out.', 'success')
     return redirect(url_for('login'))
+
+@app.route('/input' , methods=['GET', 'POST'])
+@login_required
+def input():
+    if request.method == "POST":
+        features = [
+            float(request.form['mean_radius']),
+            float(request.form['mean_texture']),
+            float(request.form['mean_perimeter']),
+            float(request.form['mean_area']),
+            float(request.form['mean_smoothness']),
+            float(request.form['mean_compactness']),
+            float(request.form['mean_concavity']),
+            float(request.form['mean_concave_points']),
+            float(request.form['mean_symmetry']),
+            float(request.form['mean_fractal_dimension']),
+            float(request.form['radius_se']),
+            float(request.form['texture_se']),
+            float(request.form['perimeter_se']),
+            float(request.form['area_se']),
+            float(request.form['smoothness_se']),
+            float(request.form['compactness_se']),
+            float(request.form['concavity_se']),
+            float(request.form['concave_points_se']),
+            float(request.form['symmetry_se']),
+            float(request.form['fractal_dimension_se']),
+            float(request.form['worst_radius']),
+            float(request.form['worst_texture']),
+            float(request.form['worst_perimeter']),
+            float(request.form['worst_area']),
+            float(request.form['worst_smoothness']),
+            float(request.form['worst_compactness']),
+            float(request.form['worst_concavity']),
+            float(request.form['worst_concave_points']),
+            float(request.form['worst_symmetry']),
+            float(request.form['worst_fractal_dimension'])
+        ]
+        prediction = cancer_prediction(features) 
+        return render_template('result.html', prediction= prediction)
+     
+    return render_template('input.html')
+@app.route('/result')
+@login_required
+def result():
+    return render_template("result.html")
+    
+
 
 
 # Create database
