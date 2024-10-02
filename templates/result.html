@@ -44,7 +44,29 @@
     <div class="container text-center">
         <br>
         <h2>Results</h2>
-        <p class="lead">The prediction is: {{prediction}}</p>
+        <p class="lead">The Tumor is <strong>{{prediction.upper()}}<strong></p>
+
+
+
+            <div class="d-flex justify-content-center my-4">
+                <div class="card mb-3" style="max-width: 50rem; border-radius: 10px; background-color: #f0f0f0;">
+                    <div class="card-header text-center" style="font-weight: normal; background-color: #e0e0e0;">
+                        What is {{ prediction }} tumor?
+                    </div>
+                    <div class="card-body text-center">
+                        {% if prediction == "benign" %}
+                            <p class="card-text" style="font-weight: normal;">
+                                Benign tumors typically do not spread to other parts of the body and are often monitored rather than treated unless they cause discomfort or other issues. Regular check-ups and imaging (like mammograms or ultrasounds) help in monitoring these conditions.
+                            </p>
+                        {% elif prediction == "malignant" %}
+                            <p class="card-text" style="font-weight: normal;">
+                                Malignant tumors are cancerous and may be aggressive because they invade and damage surrounding tissue. When a tumor is suspected to be malignant, the doctor will perform a biopsy to determine the severity or aggressiveness of the tumor.
+                            </p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
         <a href="{{ url_for('input') }}" class="btn btn-custom">Predict Again</a>
         </div>
     
