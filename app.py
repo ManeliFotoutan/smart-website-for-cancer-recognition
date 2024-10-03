@@ -8,6 +8,9 @@ from forms import UserForm, LoginForm, OTPForm
 from OTP import send_code
 from model import cancer_prediction
 
+
+from DataBase import User, userResult # import data base models
+
 app = Flask(__name__)
 csrf = CSRFProtect(app)
 
@@ -17,23 +20,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = os.urandom(12)
 
 db = SQLAlchemy(app)
-
-# User model
-class User(db.Model):
-    __tablename__ = "user"
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(100), nullable=False, unique=True)
-    password = db.Column(db.String(128), nullable=False)
-    result = db.relationship("userResult", backref='author', lazy = True)
-
-class userResult(db.Model):
-    __tablename__ = "user_result"
-    id = db.Column(db.Integer, primary_key=True)
-    result = db.Column(db.Integer, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable = False)
-
-
-
 
 
 # Login required decorator
@@ -137,41 +123,105 @@ def logout():
 @app.route('/input' , methods=['GET', 'POST'])
 @login_required
 def input():
-    if request.method == "POST":
+    current_user = User.query.filter_by(username=session['username']).first()
+    if request.method == 'POST':
+        mean_radius = float(request.form['mean_radius'])
+        mean_texture = float(request.form['mean_texture'])
+        mean_perimeter = float(request.form['mean_perimeter'])
+        mean_area = float(request.form['mean_area'])
+        mean_smoothness = float(request.form['mean_smoothness'])
+        mean_compactness = float(request.form['mean_compactness'])
+        mean_concavity = float(request.form['mean_concavity'])
+        mean_concave_points = float(request.form['mean_concave_points'])
+        mean_symmetry = float(request.form['mean_symmetry'])
+        mean_fractal_dimension = float(request.form['mean_fractal_dimension'])
+        radius_se = float(request.form['radius_se'])
+        texture_se = float(request.form['texture_se'])
+        perimeter_se = float(request.form['perimeter_se'])
+        area_se = float(request.form['area_se'])
+        smoothness_se = float(request.form['smoothness_se'])
+        compactness_se = float(request.form['compactness_se'])
+        concavity_se = float(request.form['concavity_se'])
+        concave_points_se = float(request.form['concave_points_se'])
+        symmetry_se = float(request.form['symmetry_se'])
+        fractal_dimension_se = float(request.form['fractal_dimension_se'])
+        worst_radius = float(request.form['worst_radius'])
+        worst_texture = float(request.form['worst_texture'])
+        worst_perimeter = float(request.form['worst_perimeter'])
+        worst_area = float(request.form['worst_area'])
+        worst_smoothness = float(request.form['worst_smoothness'])
+        worst_compactness = float(request.form['worst_compactness'])
+        worst_concavity = float(request.form['worst_concavity'])
+        worst_concave_points = float(request.form['worst_concave_points'])
+        worst_symmetry = float(request.form['worst_symmetry'])
+        worst_fractal_dimension = float(request.form['worst_fractal_dimension'])
+
+
+
+
         features = [
-            float(request.form['mean_radius']),
-            float(request.form['mean_texture']),
-            float(request.form['mean_perimeter']),
-            float(request.form['mean_area']),
-            float(request.form['mean_smoothness']),
-            float(request.form['mean_compactness']),
-            float(request.form['mean_concavity']),
-            float(request.form['mean_concave_points']),
-            float(request.form['mean_symmetry']),
-            float(request.form['mean_fractal_dimension']),
-            float(request.form['radius_se']),
-            float(request.form['texture_se']),
-            float(request.form['perimeter_se']),
-            float(request.form['area_se']),
-            float(request.form['smoothness_se']),
-            float(request.form['compactness_se']),
-            float(request.form['concavity_se']),
-            float(request.form['concave_points_se']),
-            float(request.form['symmetry_se']),
-            float(request.form['fractal_dimension_se']),
-            float(request.form['worst_radius']),
-            float(request.form['worst_texture']),
-            float(request.form['worst_perimeter']),
-            float(request.form['worst_area']),
-            float(request.form['worst_smoothness']),
-            float(request.form['worst_compactness']),
-            float(request.form['worst_concavity']),
-            float(request.form['worst_concave_points']),
-            float(request.form['worst_symmetry']),
-            float(request.form['worst_fractal_dimension'])
+            mean_radius, mean_texture, mean_perimeter, mean_area, mean_smoothness,
+            mean_compactness, mean_concavity, mean_concave_points, mean_symmetry, mean_fractal_dimension,
+            radius_se, texture_se, perimeter_se, area_se, smoothness_se,
+            compactness_se, concavity_se, concave_points_se, symmetry_se, fractal_dimension_se,
+            worst_radius, worst_texture, worst_perimeter, worst_area, worst_smoothness,
+            worst_compactness, worst_concavity, worst_concave_points, worst_symmetry, worst_fractal_dimension
         ]
-        prediction = cancer_prediction(features) 
-        return render_template('result.html', prediction= prediction)
+
+        prediction = cancer_prediction(features)
+
+                # Create a new record in the userResult table with all the inputs
+        new_result = userResult(
+            mean_radius=mean_radius,
+            mean_texture=mean_texture,
+            mean_perimeter=mean_perimeter,
+            mean_area=mean_area,
+            mean_smoothness=mean_smoothness,
+            mean_compactness=mean_compactness,
+            mean_concavity=mean_concavity,
+            mean_concave_points=mean_concave_points,
+            mean_symmetry=mean_symmetry,
+            mean_fractal_dimension=mean_fractal_dimension,
+            radius_se=radius_se,
+            texture_se=texture_se,
+            perimeter_se=perimeter_se,
+            area_se=area_se,
+            smoothness_se=smoothness_se,
+            compactness_se=compactness_se,
+            concavity_se=concavity_se,
+            concave_points_se=concave_points_se,
+            symmetry_se=symmetry_se,
+            fractal_dimension_se=fractal_dimension_se,
+            worst_radius=worst_radius,
+            worst_texture=worst_texture,
+            worst_perimeter=worst_perimeter,
+            worst_area=worst_area,
+            worst_smoothness=worst_smoothness,
+            worst_compactness=worst_compactness,
+            worst_concavity=worst_concavity,
+            worst_concave_points=worst_concave_points,
+            worst_symmetry=worst_symmetry,
+            worst_fractal_dimension=worst_fractal_dimension
+            result = prediction
+            user_id = user_id=current_user.id
+
+        )
+        db.session.add(new_result)
+        db.session.commit()
+
+    return render_template('result.html', prediction= prediction)
+
+@app.route('/history')
+@login_required
+def history():
+    current_user = User.query.filter_by(username=session['username']).first()
+
+    # all previous predictions for the logged-in user
+    predictions = userResult.query.filter_by(user_id=current_user.id).all()
+
+    return render_template('history.html', predictions=predictions)
+
+
      
     return render_template('input.html')
 @app.route('/result')
