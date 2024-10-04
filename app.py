@@ -201,9 +201,9 @@ def input():
             worst_concavity=worst_concavity,
             worst_concave_points=worst_concave_points,
             worst_symmetry=worst_symmetry,
-            worst_fractal_dimension=worst_fractal_dimension
-            result = prediction
-            user_id = user_id=current_user.id
+            worst_fractal_dimension=worst_fractal_dimension,
+            result = prediction,
+            user_id = current_user.id
 
         )
         db.session.add(new_result)
