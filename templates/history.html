@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Prediction History</h1>
+        
+        <!-- Check if there are any predictions -->
+        {% if predictions %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>Mean Radius</th>
+                        <th>Mean Texture</th>
+                        <th>Mean Perimeter</th>
+                        <th>Mean Area</th>
+                        <th>Mean Smoothness</th>
+                        <th>Prediction Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Loop through the user's predictions -->
+                    {% for prediction in predictions %}
+                    <tr>
+                        <td>{{ prediction.timestamp }}</td>
+                        <td>{{ prediction.mean_radius }}</td>
+                        <td>{{ prediction.mean_texture }}</td>
+                        <td>{{ prediction.mean_perimeter }}</td>
+                        <td>{{ prediction.mean_area }}</td>
+                        <td>{{ prediction.mean_smoothness }}</td>
+                        <td>{{ prediction.result }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No prediction history available.</p>
+        {% endif %}
+        
+        <a href="{{ url_for('input') }}">Make a New Prediction</a>
+    </div>
+</body>
+</html>
