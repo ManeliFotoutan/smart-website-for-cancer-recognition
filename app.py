@@ -64,7 +64,7 @@ class userResult(db.Model):
     worst_fractal_dimension = db.Column(db.Float, nullable=False)
 
 
-    result = db.Column(db.Float, nullable=False)
+    result = db.Column(db.String(100), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable = False)
 
 
@@ -220,7 +220,7 @@ def input():
 
         prediction = cancer_prediction(features)
 
-                # Create a new record in the userResult table with all the inputs
+        # Create a new record in the userResult table with all the inputs
         new_result = userResult(
             mean_radius=mean_radius,
             mean_texture=mean_texture,
@@ -258,8 +258,10 @@ def input():
         )
         db.session.add(new_result)
         db.session.commit()
+        
+        return render_template(url_for("result"))
 
-    return render_template('result.html', prediction= prediction)
+    return render_template("input.html")
 
 @app.route('/history')
 @login_required
@@ -273,17 +275,20 @@ def history():
 
 
      
-    return render_template('input.html')
 @app.route('/result')
 @login_required
 def result():
-    return render_template("result.html")
+    current_user = User.query.filter_by(username=session['username']).first()
+    prediction = db.session.query(userResult.result).filter_by(id=current_user.id).first()[0]
+
+    return render_template("result.html",prediction=prediction)
     
 
 
 
-# Create database
-with app.app_context():
-    db.create_all()
+
 if __name__ == '__main__':
+    # Create database
+    with app.app_context():
+        db.create_all()
     app.run(debug=True, port=5001)
