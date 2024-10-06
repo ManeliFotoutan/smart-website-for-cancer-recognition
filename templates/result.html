@@ -47,7 +47,7 @@
 <div class="container text-center">
     <br>
     <br>
-    <div class="text-center mb-5">
+    <div class="text-center mb-2">
         <h5 class="mb-2 px-3 py-1 text-dark rounded-pill d-inline-block" style="border:2px solid #4F1E7B;">Results</h5>
         <h1 class="display-5 w-50 mx-auto">Cancer Recognition Result</h1>
     </div>
@@ -75,10 +75,20 @@
                 </p>
                 {% endif %}
             </div>
+            <br>
+            <a href="{{ url_for('input') }}" class="btn btn-custom">Predict Again</a>
         </div>
     </div>
+</div>
 
-    <a href="{{ url_for('input') }}" class="btn btn-custom">Predict Again</a>
+<div class="container text-center my-2">
+    <h5 class="mb-2 px-3 py-1 text-dark rounded-pill d-inline-block" style="border:2px solid #4F1E7B;">What's Cancer
+        ?!</h5>
+    <br>
+    <br>
+    <video width="600" height="600" controls>
+        <source src="static/vid/whats-cancer.mp4" type="video/mp4">
+    </video>
 </div>
 
 
