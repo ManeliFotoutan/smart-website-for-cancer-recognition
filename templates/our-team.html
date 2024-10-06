@@ -9,136 +9,220 @@
     <link rel="icon" type="image/png" sizes="16x16" href="../static/ico/favicon-16x16.png">
     <link rel="manifest" href="../static/ico/site.webmanifest">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="../static/css/style.css" rel="stylesheet">
 
 </head>
 
 <body>
 
-    <div class="container-fluid bg-light sticky-top">
-        <div class="container">
-            <nav class="navbar navbar-expand-lg bg-light navbar-light py-2 py-lg-0">
-                <a href="/" class="navbar-brand1">
-                    <img class="img img-fluid" src="static/img/Filoger.png" alt="Logo">
-                </a>
-                <a href="/" class="navbar-brand2">
-                    <img class="img img-fluid" src="static/img/CancerRecognition.png" alt="Logo">
-                </a>
-                <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
+<div class="container-fluid bg-light sticky-top">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg bg-light navbar-light py-2 py-lg-0">
+            <a href="/" class="navbar-brand1">
+                <img class="img img-fluid" src="static/img/Filoger.png" alt="Logo">
+            </a>
+            <a href="/" class="navbar-brand2">
+                <img class="img img-fluid" src="static/img/CancerRecognition.png" alt="Logo">
+            </a>
+            <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
                     data-bs-target="#navbarCollapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <div class="navbar-nav ms-auto">
-                        <a href="/" class="nav-item nav-link">Home</a>
-                        <a href="/our-team" class="nav-item nav-link active">Our Team</a>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Register / Login</a>
-                            <div class="dropdown-menu bg-light rounded-0 m-0">
-                                <a href="/register" class="dropdown-item">Register</a>
-                                <a href="/login" class="dropdown-item">Login</a>
-                            </div>
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto">
+                    <a href="/" class="nav-item nav-link">Home</a>
+                    <a href="/our-team" class="nav-item nav-link active">Our Team</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Register / Login</a>
+                        <div class="dropdown-menu bg-light rounded-0 m-0">
+                            <a href="/register" class="dropdown-item">Register</a>
+                            <a href="/login" class="dropdown-item">Login</a>
                         </div>
                     </div>
                 </div>
-            </nav>
+            </div>
+        </nav>
+    </div>
+</div>
+
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h5 class="mb-2 px-3 py-1 text-dark rounded-pill d-inline-block" style="border:2px solid #4F1E7B;">Our
+                Team</h5>
+            <h1 class="display-5 w-50 mx-auto">Our Team Members</h1>
+        </div>
+        <div class="row g-5">
+            <div class="col-xxl-4 col-lg-6 col-md-6 col-sm-12">
+                <div class="rounded team-item">
+                    <img src="static/img/team-maneli.jpg" class="img-fluid w-100 rounded-top border border-bottom-0"
+                         alt=""
+                         title="">
+                    <div class="team-content bg-pink text-light text-center py-3">
+                        <span class="fs-4 fw-bold text-white">Maneli Foroutan</span>
+                        <p class="text-light mb-0">Software Engineer</p>
+                    </div>
+                    <div class="team-icon d-flex flex-column ">
+                        <a href="tel:+989129679041" class="btn bg-purple text-white border-0 mb-2"><i
+                                class="fas fa-phone-alt"></i></a>
+                        <a href="mailto:maneli0foroutan@gmail.com" class="btn bg-purple text-white border-0 mb-2"><i
+                                class="fa fa fa-envelope-open"></i></a>
+                        <a href="https://www.linkedin.com/in/" class="btn bg-purple text-white border-0 mb-2"><i
+                                class="fab fa-linkedin-in"></i></a>
+                        <a href="https://t.me/maneli_foroutan" class="btn bg-purple text-white border-0 mb-2"><i
+                                class="fa fa-paper-plane"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxl-4 col-lg-6 col-md-6 col-sm-12">
+                <div class="rounded team-item">
+                    <img src="static/img/team-milad.jpg" class="img-fluid w-100 rounded-top border border-bottom-0"
+                         alt="" title="">
+                    <div class="team-content bg-pink text-light text-center py-3">
+                        <span class="fs-4 fw-bold text-white">Milad Behrouz</span>
+                        <p class="text-light mb-0">Software Engineer</p>
+                    </div>
+                    <div class="team-icon d-flex flex-column ">
+                        <a href="tel:+989213962182" class="btn bg-purple text-white border-0 mb-2"><i
+                                class="fas fa-phone-alt"></i></a>
+                        <a href="mailto:milad.behrooz68@gmail.com" class="btn bg-purple text-white border-0 mb-2"><i
+                                class="fa fa fa-envelope-open"></i></a>
+                        <a href="https://www.linkedin.com/in/" class="btn bg-purple text-white border-0 mb-2"><i
+                                class="fab fa-linkedin-in"></i></a>
+                        <a href="https://t.me/milad689" class="btn bg-purple text-white border-0 mb-2"><i
+                                class="fa fa-paper-plane"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxl-4 col-lg-6 col-md-6 col-sm-12">
+                <div class="rounded team-item">
+                    <img src="static/img/team-reza.jpg" class="img-fluid w-100 rounded-top border border-bottom-0"
+                         alt=""
+                         title="">
+                    <div class="team-content bg-pink text-light text-center py-3">
+                        <span class="fs-4 fw-bold text-white">Reza Karimi</span>
+                        <p class="text-light mb-0">Software Engineer</p>
+                    </div>
+                    <div class="team-icon d-flex flex-column ">
+                        <a href="tel:+989123456789" class="btn bg-purple text-white border-0 mb-2"><i
+                                class="fas fa-phone-alt"></i></a>
+                        <a href="mailto:" class="btn bg-purple text-white border-0 mb-2"><i
+                                class="fa fa fa-envelope-open"></i></a>
+                        <a href="https://www.linkedin.com/in/" class="btn bg-purple text-white border-0 mb-2"><i
+                                class="fab fa-linkedin-in"></i></a>
+                        <a href="https://t.me/uchihakinslayer" class="btn bg-purple text-white border-0 mb-2"><i
+                                class="fa fa-paper-plane"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxl-4 col-lg-6 col-md-6 col-sm-12">
+                <div class="rounded team-item">
+                    <img src="static/img/team.jpg" class="img-fluid w-100 rounded-top border border-bottom-0" alt=""
+                         title="">
+                    <div class="team-content bg-pink text-light text-center py-3">
+                        <span class="fs-4 fw-bold text-white">Mahdi Savoji</span>
+                        <p class="text-light mb-0">Software Engineer</p>
+                    </div>
+                    <div class="team-icon d-flex flex-column ">
+                        <a href="tel:+989376302127" class="btn bg-purple text-white border-0 mb-2"><i
+                                class="fas fa-phone-alt"></i></a>
+                        <a href="mailto:m.savoji79@gmail.com" class="btn bg-purple text-white border-0 mb-2"><i
+                                class="fa fa fa-envelope-open"></i></a>
+                        <a href="https://www.linkedin.com/in/" class="btn bg-purple text-white border-0 mb-2"><i
+                                class="fab fa-linkedin-in"></i></a>
+                        <a href="https://t.me/mahdisavoji" class="btn bg-purple text-white border-0 mb-2"><i
+                                class="fa fa-paper-plane"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xxl-4 col-lg-6 col-md-6 col-sm-12">
+                <div class="rounded team-item">
+                    <img src="static/img/team-amirreza.jpg" class="img-fluid w-100 rounded-top border border-bottom-0"
+                         alt="" title="">
+                    <div class="team-content bg-pink text-light text-center py-3">
+                        <span class="fs-4 fw-bold text-white">Amirreza Razazian</span>
+                        <p class="text-light mb-0">Software Engineer</p>
+                    </div>
+                    <div class="team-icon d-flex flex-column ">
+                        <a href="tel:+989129215451" class="btn bg-purple text-white border-0 mb-2"><i
+                                class="fas fa-phone-alt"></i></a>
+                        <a href="mailto:amirreza.razazian@gmail.com" class="btn bg-purple text-white border-0 mb-2"><i
+                                class="fa fa fa-envelope-open"></i></a>
+                        <a href="https://www.linkedin.com/in/amrrza" class="btn bg-purple text-white border-0 mb-2"><i
+                                class="fab fa-linkedin-in"></i></a>
+                        <a href="https://t.me/airesearcher" class="btn bg-purple text-white border-0 mb-2"><i
+                                class="fa fa-paper-plane"></i></a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+</div>
 
-    <div class="container-fluid py-5">
-            <div class="container py-5">
-                <div class="text-center mb-5">
-                    <h5 class="mb-2 px-3 py-1 text-dark rounded-pill d-inline-block" style="border:2px solid #4F1E7B;">Our Team</h5>
-                    <h1 class="display-5 w-50 mx-auto">Our Team Members</h1>
-                </div>
+<div class="container-fluid footer position-relative bg-dark text-white-50 mt-5 pt-5 pb-4">
+    <div class="container">
+        <div class="row g-5 py-1">
+            <div class="col-lg-6 pe-lg-5">
+                <a href="index.html" class="navbar-brand">
+                    <h1 class="h1 text-light mb-0">Cancer Recognition <span
+                            class="text-pink display-6">| Filoger</span></h1>
+                </a>
+                <p class="fs-5 mb-4" style="text-align: justify;">
+                    At m10ps group, we are dedicated to advancing cancer detection through innovative machine learning
+                    solutions. Our mission is to empower individuals with accurate and timely health insights. Together,
+                    we can make a difference in the fight against cancer.
+                </p>
+            </div>
+            <div class="col-lg-6 ps-lg-5">
                 <div class="row g-5">
-                    <div class="col-xxl-4 col-lg-6 col-md-6 col-sm-12">
-                        <div class="rounded team-item">
-                            <img src="static/img/team.jpg" class="img-fluid w-100 rounded-top border border-bottom-0" alt="" title="">
-                            <div class="team-content bg-pink text-light text-center py-3">
-                                <span class="fs-4 fw-bold text-white">Maneli Foroutan</span>
-                                <p class="text-light mb-0">Software Engineer</p>
-                            </div>
-                            <div class="team-icon d-flex flex-column ">
-                                <a href="tel:+989123456789" class="btn bg-purple text-white border-0 mb-2"><i class="fas fa-phone-alt"></i></a>
-                                <a href="mailto:" class="btn bg-purple text-white border-0 mb-2"><i class="fa fa fa-envelope-open"></i></a>
-                                <a href="https://www.linkedin.com/in/" class="btn bg-purple text-white border-0 mb-2"><i class="fab fa-linkedin-in"></i></a>
-                                <a href="https://t.me/" class="btn bg-purple text-white border-0 mb-2"><i class="fa fa-paper-plane"></i></a>
-                            </div>
-                        </div>
+                    <div class="col-sm-6">
+                        <h4 class="text-pink mb-4">Quick Links</h4>
+                        <a class="btn btn-link" href="/">Home</a>
+                        <a class="btn btn-link" href="/about-us">About Us</a>
+                        <a class="btn btn-link" href="/our-team">Our Team</a>
+                        <a class="btn btn-link" href="/login">login</a>
+                        <a class="btn btn-link" href="/register">Register</a>
                     </div>
-                    <div class="col-xxl-4 col-lg-6 col-md-6 col-sm-12">
-                        <div class="rounded team-item">
-                            <img src="static/img/team-milad.jpg" class="img-fluid w-100 rounded-top border border-bottom-0" alt="" title="">
-                            <div class="team-content bg-pink text-light text-center py-3">
-                                <span class="fs-4 fw-bold text-white">Milad Behrouz</span>
-                                <p class="text-light mb-0">Software Engineer</p>
-                            </div>
-                            <div class="team-icon d-flex flex-column ">
-                                <a href="tel:+989123456789" class="btn bg-purple text-white border-0 mb-2"><i class="fas fa-phone-alt"></i></a>
-                                <a href="mailto:" class="btn bg-purple text-white border-0 mb-2"><i class="fa fa fa-envelope-open"></i></a>
-                                <a href="https://www.linkedin.com/in/" class="btn bg-purple text-white border-0 mb-2"><i class="fab fa-linkedin-in"></i></a>
-                                <a href="https://t.me/milad689" class="btn bg-purple text-white border-0 mb-2"><i class="fa fa-paper-plane"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xxl-4 col-lg-6 col-md-6 col-sm-12">
-                        <div class="rounded team-item">
-                            <img src="static/img/team.jpg" class="img-fluid w-100 rounded-top border border-bottom-0" alt="" title="">
-                            <div class="team-content bg-pink text-light text-center py-3">
-                                <span class="fs-4 fw-bold text-white">Mahdi Savoji</span>
-                                <p class="text-light mb-0">Software Engineer</p>
-                            </div>
-                            <div class="team-icon d-flex flex-column ">
-                                <a href="tel:+989123456789" class="btn bg-purple text-white border-0 mb-2"><i class="fas fa-phone-alt"></i></a>
-                                <a href="mailto:" class="btn bg-purple text-white border-0 mb-2"><i class="fa fa fa-envelope-open"></i></a>
-                                <a href="https://www.linkedin.com/in/" class="btn bg-purple text-white border-0 mb-2"><i class="fab fa-linkedin-in"></i></a>
-                                <a href="https://t.me/" class="btn bg-purple text-white border-0 mb-2"><i class="fa fa-paper-plane"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xxl-4 col-lg-6 col-md-6 col-sm-12">
-                        <div class="rounded team-item">
-                            <img src="static/img/team.jpg" class="img-fluid w-100 rounded-top border border-bottom-0" alt="" title="">
-                            <div class="team-content bg-pink text-light text-center py-3">
-                                <span class="fs-4 fw-bold text-white">Reza Karimi</span>
-                                <p class="text-light mb-0">Software Engineer</p>
-                            </div>
-                            <div class="team-icon d-flex flex-column ">
-                                <a href="tel:+989123456789" class="btn bg-purple text-white border-0 mb-2"><i class="fas fa-phone-alt"></i></a>
-                                <a href="mailto:" class="btn bg-purple text-white border-0 mb-2"><i class="fa fa fa-envelope-open"></i></a>
-                                <a href="https://www.linkedin.com/in/" class="btn bg-purple text-white border-0 mb-2"><i class="fab fa-linkedin-in"></i></a>
-                                <a href="https://t.me/" class="btn bg-purple text-white border-0 mb-2"><i class="fa fa-paper-plane"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xxl-4 col-lg-6 col-md-6 col-sm-12">
-                        <div class="rounded team-item">
-                            <img src="static/img/team-amirreza.jpg" class="img-fluid w-100 rounded-top border border-bottom-0" alt="" title="">
-                            <div class="team-content bg-pink text-light text-center py-3">
-                                <span class="fs-4 fw-bold text-white">Amirreza Razazian</span>
-                                <p class="text-light mb-0">Software Engineer</p>
-                            </div>
-                            <div class="team-icon d-flex flex-column ">
-                                <a href="tel:+989129215451" class="btn bg-purple text-white border-0 mb-2"><i class="fas fa-phone-alt"></i></a>
-                                <a href="mailto:amirreza.razazian@gmail.com" class="btn bg-purple text-white border-0 mb-2"><i class="fa fa fa-envelope-open"></i></a>
-                                <a href="https://www.linkedin.com/in/amrrza" class="btn bg-purple text-white border-0 mb-2"><i class="fab fa-linkedin-in"></i></a>
-                                <a href="https://t.me/airesearcher" class="btn bg-purple text-white border-0 mb-2"><i class="fa fa-paper-plane"></i></a>
-                            </div>
+                    <div class="col-sm-6">
+                        <h4 class="text-pink mb-4">m10ps Info</h4>
+                        <p><i class="fa fa-map-marker-alt me-2"></i>Tehran, Iran</p>
+                        <p><i class="fa fa-phone-alt me-2"></i>+98 2134567890</p>
+                        <p><i class="fa fa-envelope me-2"></i>mlops@m10px.com</p>
+                        <div class="d-flex mt-4">
+                            <a class="btn rounded btn-custom me-1" href="https://t.me/m10ps"><i
+                                    class="fa fa-paper-plane"></i></a>
+                            <a class="btn rounded btn-custom me-1" href="#"><i
+                                    class="fab fa-linkedin-in"></i></a>
+                            <a class="btn rounded btn-custom me-1" href="#"><i class="fab fa-kaggle"></i></a>
+                            <a class="btn rounded btn-custom me-1"
+                               href="https://github.com/ManeliFotoutan/smart-website-for-cancer-recognition"><i
+                                    class="fab fa-github"></i></a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+<div class="container-fluid copyright text-white-50 py-1">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <p class="mb-0">&copy; 2024 m10ps Group - All Rights Reserved.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
-    <script src="../static/js/main.js"></script>
+<script src="../static/js/main.js"></script>
 </body>
 
 </html>

@@ -1,29 +1,40 @@
-*{
+* {
 
 }
 
 /*** Our Color Start ***/
 
-.text-white{
+.text-white {
     color: #FFFFFF;
 }
 
-.text-pink{
+.text-pink {
     color: #C131BE;
 }
 
-.text-purple{
+.text-purple {
     color: #4F1E7B;
 }
 
-.bg-pink{
+.bg-pink {
     background-color: #C131BE;
 }
 
-.bg-purple{
+.bg-purple {
     background-color: #4F1E7B;
 }
 
+.btn-custom {
+    background-color: #4F1E7B;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.btn-custom:hover {
+    background-color: #C131BE;
+    color: white;
+    border-radius: 10% !important;
+}
 
 /*** Our Color End ***/
 
@@ -131,7 +142,7 @@
 .carousel-item img {
     width: 100%;
     height: 100%;
-    object-fit: cover; 
+    object-fit: cover;
 }
 
 .carousel-caption {
@@ -141,7 +152,7 @@
     bottom: 0;
     display: flex;
     align-items: center;
-    background: rgba(79, 30,123, .4);
+    background: rgba(79, 30, 123, .4);
     z-index: 1;
 }
 
@@ -150,7 +161,7 @@
         position: relative;
         min-height: 450px;
     }
-    
+
     #header-carousel .carousel-item img {
         position: absolute;
         width: 100%;
@@ -160,7 +171,6 @@
 }
 
 /*** Slider End ***/
-
 
 /*** Our Team Start ***/
 
@@ -214,13 +224,15 @@
     display: flex;
     justify-content: center;
     gap: 10px;
-    margin-bottom: 20px; 
+    margin-bottom: 20px;
 }
+
 .otp-input {
     width: 50px;
     text-align: center;
     font-size: 24px;
 }
+
 .submit-btn {
     background-color: #4F1E7B;
     color: white;
@@ -230,10 +242,70 @@ h2 {
     color: #4F1E7B;
     text-align: center;
 }
+
 /***OTP End ***/
 
-.btn-custom {
-    background-color: #4F1E7B;
-    color: white; 
-    margin-bottom: 20px; 
+/*** Footer Start ***/
+.footer {
+    background: linear-gradient(rgba(39, 14, 59, 0.2), rgba(39, 14, 59, 0.7)), url(../img/footer.png) center center no-repeat;
+    background-size: contain;
 }
+
+@media (min-width: 992px) {
+    .footer::after {
+        position: absolute;
+        content: "";
+        width: 0px;
+        height: 100%;
+        top: 0;
+        left: 50%;
+        border-left: 1px dashed rgba(255, 255, 255, .2);
+    }
+}
+
+.footer .btn.btn-link {
+    display: block;
+    margin-bottom: 5px;
+    padding: 0;
+    text-align: left;
+    color: rgba(255, 255, 255, .5);
+    font-weight: normal;
+    text-transform: capitalize;
+    transition: .3s;
+    text-decoration: none;
+}
+
+.footer .btn.btn-link::before {
+    position: relative;
+    content: "\f105";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    color: rgba(255, 255, 255, .5);
+    margin-right: 10px;
+    text-decoration: none;
+}
+
+.footer .btn.btn-link:hover {
+    color: #4F1E7B !important;
+    letter-spacing: 2px;
+    box-shadow: none;
+    text-decoration: none;
+}
+
+/*** Footer End ***/
+
+/*** Copyright Start ***/
+.copyright {
+    background-color: #1b0a29 !important;
+    border-top: 1px dashed rgba(255, 255, 255, .2);
+}
+
+.copyright a {
+    color: var(--bs-white);
+}
+
+.copyright a:hover {
+    color: #C131BE;
+}
+
+/*** Copyright End ***/

@@ -2,196 +2,353 @@
 <html lang="en">
 
 <head>
-    <title>Input Information- Cancer Recognition</title>
+    <title>Input Data For Prediction- Cancer Recognition</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="apple-touch-icon" sizes="180x180" href="../static/ico/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../static/ico/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../static/ico/favicon-16x16.png">
     <link rel="manifest" href="../static/ico/site.webmanifest">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="../static/css/style.css" rel="stylesheet">
 </head>
 
 <body>
 
-    <div class="container-fluid bg-light sticky-top">
-        <div class="container">
-            <nav class="navbar navbar-expand-lg bg-light navbar-light py-2 py-lg-0">
-                <a href="/" class="navbar-brand1">
-                    <img class="img img-fluid" src="static/img/Filoger.png" alt="Logo">
-                </a>
-                <a href="/" class="navbar-brand2">
-                    <img class="img img-fluid" src="static/img/CancerRecognition.png" alt="Logo">
-                </a>
-                <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
+<div class="container-fluid bg-light sticky-top">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg bg-light navbar-light py-2 py-lg-0">
+            <a href="/" class="navbar-brand1">
+                <img class="img img-fluid" src="static/img/Filoger.png" alt="Logo">
+            </a>
+            <a href="/" class="navbar-brand2">
+                <img class="img img-fluid" src="static/img/CancerRecognition.png" alt="Logo">
+            </a>
+            <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
                     data-bs-target="#navbarCollapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <div class="navbar-nav ms-auto">
-                        <a href="/" class="nav-item nav-link">Home</a>
-                        <a href="/our-team" class="nav-item nav-link">Our Team</a>
-                        <a href="/logout" class="nav-item nav-link">Logout</a>
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto">
+                    <a href="/" class="nav-item nav-link">Home</a>
+                    <a href="/our-team" class="nav-item nav-link">Our Team</a>
+                    <a href="/history" class="nav-item nav-link"><span class="text-purple"> {{ session.get("username") }}</span>'s
+                        History</a>
+                    <a href="/logout" class="nav-item nav-link">Logout</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <br>
+    <br>
+    <div class="text-center mb-5">
+        <h5 class="mb-2 px-3 py-1 text-dark rounded-pill d-inline-block" style="border:2px solid #4F1E7B;">Input
+            Data</h5>
+        <h1 class="display-5 w-50 mx-auto mt-2 text-pink">Hello {{ session.get("username") }}!</h1>
+        <h2 class="display-5 w-50 mx-auto mt-1">Enter Information For Prediction</h2>
+    </div>
+
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="mt-3">
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+
+    <form method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <table class="table table-borderless">
+            <tr>
+                <td class="col-4">
+                    <div class="form-group">
+                        <label>Mean Radius</label>
+                        <input type="text" class="form-control" name="mean_radius" required>
+                    </div>
+                </td>
+                <td class="col-4">
+                    <div class="form-group">
+                        <label>Mean Texture</label>
+                        <input type="text" class="form-control" name="mean_texture" required>
+                    </div>
+                </td>
+                <td class="col-4">
+                    <div class="form-group">
+                        <label>Mean Perimeter</label>
+                        <input type="text" class="form-control" name="mean_perimeter" required>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-4">
+                    <div class="form-group">
+                        <label>Mean Area</label>
+                        <input type="text" class="form-control" name="mean_area" required>
+                    </div>
+                </td>
+                <td class="col-4">
+                    <div class="form-group">
+                        <label>Mean Smoothness</label>
+                        <input type="text" class="form-control" name="mean_smoothness" required>
+                    </div>
+                </td>
+                <td class="col-4">
+                    <div class="form-group">
+                        <label>Mean Compactness</label>
+                        <input type="text" class="form-control" name="mean_compactness" required>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-4">
+                    <div class="form-group">
+                        <label>Mean Concavity</label>
+                        <input type="text" class="form-control" name="mean_concavity" required>
+                    </div>
+                </td>
+                <td class="col-4">
+                    <div class="form-group">
+                        <label>Mean Concave Points</label>
+                        <input type="text" class="form-control" name="mean_concave_points" required>
+                    </div>
+                </td>
+                <td class="col-4">
+                    <div class="form-group">
+                        <label>Mean Symmetry</label>
+                        <input type="text" class="form-control" name="mean_symmetry" required>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-4">
+                    <div class="form-group">
+                        <label>Mean Fractal Dimension</label>
+                        <input type="text" class="form-control" name="mean_fractal_dimension" required>
+                    </div>
+                </td>
+                <td class="col-4">
+                    <div class="form-group">
+                        <label>Radius SE (standard error)</label>
+                        <input type="text" class="form-control" name="radius_se" required>
+                    </div>
+                </td>
+                <td class="col-4">
+                    <div class="form-group">
+                        <label>Texture SE (standard error)</label>
+                        <input type="text" class="form-control" name="texture_se" required>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-4">
+                    <div class="form-group">
+                        <label>Perimeter SE (standard error)</label>
+                        <input type="text" class="form-control" name="perimeter_se" required>
+                    </div>
+                </td>
+                <td class="col-4">
+                    <div class="form-group">
+                        <label>Area SE (standard error)</label>
+                        <input type="text" class="form-control" name="area_se" required>
+                    </div>
+                </td>
+                <td class="col-4">
+                    <div class="form-group">
+                        <label>Smoothness SE (standard error)</label>
+                        <input type="text" class="form-control" name="smoothness_se" required>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-4">
+                    <div class="form-group">
+                        <label>Compactness SE (standard error)</label>
+                        <input type="text" class="form-control" name="compactness_se" required>
+                    </div>
+                </td>
+                <td class="col-4">
+                    <div class="form-group">
+                        <label>Compactness SE (standard error)</label>
+                        <input type="text" class="form-control" name="compactness_se" required>
+                    </div>
+                </td>
+                <td class="col-4">
+                    <div class="form-group">
+                        <label>Concavity SE (standard error)</label>
+                        <input type="text" class="form-control" name="concavity_se" required>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-4">
+                    <div class="form-group">
+                        <label>Concave Points SE (standard error)</label>
+                        <input type="text" class="form-control" name="concave_points_se" required>
+                    </div>
+                </td>
+                <td class="col-4">
+                    <div class="form-group">
+                        <label>Symmetry SE (standard error)</label>
+                        <input type="text" class="form-control" name="symmetry_se" required>
+                    </div>
+                </td>
+                <td class="col-4">
+                    <div class="form-group">
+                        <label>Fractal Dimension SE (standard error)</label>
+                        <input type="text" class="form-control" name="fractal_dimension_se" required>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-4">
+                    <div class="form-group">
+                        <label>Worst Radius</label>
+                        <input type="text" class="form-control" name="worst_radius" required>
+                    </div>
+                </td>
+                <td class="col-4">
+                    <div class="form-group">
+                        <label>Worst Texture</label>
+                        <input type="text" class="form-control" name="worst_texture" required>
+                    </div>
+                </td>
+                <td class="col-4">
+                    <div class="form-group">
+                        <label>Worst Perimeter</label>
+                        <input type="text" class="form-control" name="worst_perimeter" required>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-4">
+                    <div class="form-group">
+                        <label>Worst Area</label>
+                        <input type="text" class="form-control" name="worst_area" required>
+                    </div>
+                </td>
+                <td class="col-4">
+                    <div class="form-group">
+                        <label>Worst Smoothness</label>
+                        <input type="text" class="form-control" name="worst_smoothness" required>
+                    </div>
+                </td>
+                <td class="col-4">
+                    <div class="form-group">
+                        <label>Worst Compactness</label>
+                        <input type="text" class="form-control" name="worst_compactness" required>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-4">
+                    <div class="form-group">
+                        <label>Worst Concavity</label>
+                        <input type="text" class="form-control" name="worst_concavity" required>
+                    </div>
+                </td>
+                <td class="col-4">
+                    <div class="form-group">
+                        <label>Worst Concave Points</label>
+                        <input type="text" class="form-control" name="worst_concave_points" required>
+                    </div>
+                </td>
+                <td class="col-4">
+                    <div class="form-group">
+                        <label>Worst Symmetry</label>
+                        <input type="text" class="form-control" name="worst_symmetry" required>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-4">
+                    <div class="form-group">
+                        <label>Worst Fractal Dimension</label>
+                        <input type="text" class="form-control" name="worst_fractal_dimension" required>
+                    </div>
+                </td>
+                <td class="col-4">
+                    &nbsp;
+                </td>
+                <td class="col-4">
+                    <div class="form-group mt-3 text-end">
+                        <button type="reset" class="btn btn-custom me-2">Reset</button>
+                        <button type="submit" class="btn btn-custom">Submit</button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div class="container-fluid footer position-relative bg-dark text-white-50 mt-5 pt-5 pb-4">
+    <div class="container">
+        <div class="row g-5 py-1">
+            <div class="col-lg-6 pe-lg-5">
+                <a href="index.html" class="navbar-brand">
+                    <h1 class="h1 text-light mb-0">Cancer Recognition <span
+                            class="text-pink display-6">| Filoger</span></h1>
+                </a>
+                <p class="fs-5 mb-4" style="text-align: justify;">
+                    At m10ps group, we are dedicated to advancing cancer detection through innovative machine learning
+                    solutions. Our mission is to empower individuals with accurate and timely health insights. Together,
+                    we can make a difference in the fight against cancer.
+                </p>
+            </div>
+            <div class="col-lg-6 ps-lg-5">
+                <div class="row g-5">
+                    <div class="col-sm-6">
+                        <h4 class="text-pink mb-4">Quick Links</h4>
+                        <a class="btn btn-link" href="/">Home</a>
+                        <a class="btn btn-link" href="/about-us">About Us</a>
+                        <a class="btn btn-link" href="/our-team">Our Team</a>
+                        <a class="btn btn-link" href="/login">login</a>
+                        <a class="btn btn-link" href="/register">Register</a>
+                    </div>
+                    <div class="col-sm-6">
+                        <h4 class="text-pink mb-4">m10ps Info</h4>
+                        <p><i class="fa fa-map-marker-alt me-2"></i>Tehran, Iran</p>
+                        <p><i class="fa fa-phone-alt me-2"></i>+98 2134567890</p>
+                        <p><i class="fa fa-envelope me-2"></i>mlops@m10px.com</p>
+                        <div class="d-flex mt-4">
+                            <a class="btn rounded btn-custom me-1" href="https://t.me/m10ps"><i
+                                    class="fa fa-paper-plane"></i></a>
+                            <a class="btn rounded btn-custom me-1" href="#"><i
+                                    class="fab fa-linkedin-in"></i></a>
+                            <a class="btn rounded btn-custom me-1" href="#"><i class="fab fa-kaggle"></i></a>
+                            <a class="btn rounded btn-custom me-1"
+                               href="https://github.com/ManeliFotoutan/smart-website-for-cancer-recognition"><i
+                                    class="fab fa-github"></i></a>
+                        </div>
                     </div>
                 </div>
-            </nav>
+            </div>
         </div>
     </div>
+</div>
 
-    <div class="container mt-5">
-        <br>
-        <h2>Enter Information</h2>
-       
-        <!-- Flash messages for feedback -->
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="mt-3">
-                    {% for category, message in messages %}
-                        <div class="alert alert-{{ category }}" role="alert">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endwith %}
-
-        
-        <form method="POST">
-            <div class="form-group">
-
-                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>  <!-- CSRF token is added here -->
-
-                <label>Mean Radius</label>
-                <input type="text" class="form-control" name="mean_radius" required>
+<div class="container-fluid copyright text-white-50 py-1">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center">
+                <p class="mb-0">&copy; 2024 m10ps Group - All Rights Reserved.</p>
             </div>
-            <div class="form-group">
-                <label>Mean Texture</label>
-                <input type="text" class="form-control" name="mean_texture" required>
-            </div>
-            <div class="form-group">
-                <label>Mean Perimeter</label>
-                <input type="text" class="form-control" name="mean_perimeter" required>
-            </div>
-            <div class="form-group">
-                <label>Mean Area</label>
-                <input type="text" class="form-control" name="mean_area" required>
-            </div>
-            <div class="form-group">
-                <label>Mean Smoothness</label>
-                <input type="text" class="form-control" name="mean_smoothness" required>
-            </div>
-            <div class="form-group">
-                <label>Mean Compactness</label>
-                <input type="text" class="form-control" name="mean_compactness" required>
-            </div>
-            <div class="form-group">
-                <label>Mean Concavity</label>
-                <input type="text" class="form-control" name="mean_concavity" required>
-            </div>
-            <div class="form-group">
-                <label>Mean Concave Points</label>
-                <input type="text" class="form-control" name="mean_concave_points" required>
-            </div>
-            <div class="form-group">
-                <label>Mean Symmetry</label>
-                <input type="text" class="form-control" name="mean_symmetry" required>
-            </div>
-            <div class="form-group">
-                <label>Mean Fractal Dimension</label>
-                <input type="text" class="form-control" name="mean_fractal_dimension" required>
-            </div>
-            <div class="form-group">
-                <label>Radius SE (standard error)</label>
-                <input type="text" class="form-control" name="radius_se" required>
-            </div>
-            <div class="form-group">
-                <label>Texture SE (standard error)</label>
-                <input type="text" class="form-control" name="texture_se" required>
-            </div>
-            <div class="form-group">
-                <label>Perimeter SE (standard error)</label>
-                <input type="text" class="form-control" name="perimeter_se" required>
-            </div>
-            <div class="form-group">
-                <label>Area SE (standard error)</label>
-                <input type="text" class="form-control" name="area_se" required>
-            </div>
-            <div class="form-group">
-                <label>Smoothness SE (standard error)</label>
-                <input type="text" class="form-control" name="smoothness_se" required>
-            </div>
-            <div class="form-group">
-                <label>Compactness SE (standard error)</label>
-                <input type="text" class="form-control" name="compactness_se" required>
-            </div>
-            <div class="form-group">
-                <label>Concavity SE (standard error)</label>
-                <input type="text" class="form-control" name="concavity_se" required>
-            </div>
-            <div class="form-group">
-                <label>Concave Points SE (standard error)</label>
-                <input type="text" class="form-control" name="concave_points_se" required>
-            </div>
-            <div class="form-group">
-                <label>Symmetry SE (standard error)</label>
-                <input type="text" class="form-control" name="symmetry_se" required>
-            </div>
-            <div class="form-group">
-                <label>Fractal Dimension SE (standard error)</label>
-                <input type="text" class="form-control" name="fractal_dimension_se" required>
-            </div>
-            <div class="form-group">
-                <label>Worst Radius</label>
-                <input type="text" class="form-control" name="worst_radius" required>
-            </div>
-            <div class="form-group">
-                <label>Worst Texture</label>
-                <input type="text" class="form-control" name="worst_texture" required>
-            </div>
-            <div class="form-group">
-                <label>Worst Perimeter</label>
-                <input type="text" class="form-control" name="worst_perimeter" required>
-            </div>
-            <div class="form-group">
-                <label>Worst Area</label>
-                <input type="text" class="form-control" name="worst_area" required>
-            </div>
-            <div class="form-group">
-                <label>Worst Smoothness</label>
-                <input type="text" class="form-control" name="worst_smoothness" required>
-            </div>
-            <div class="form-group">
-                <label>Worst Compactness</label>
-                <input type="text" class="form-control" name="worst_compactness" required>
-            </div>
-            <div class="form-group">
-                <label>Worst Concavity</label>
-                <input type="text" class="form-control" name="worst_concavity" required>
-            </div>
-            <div class="form-group">
-                <label>Worst Concave Points</label>
-                <input type="text" class="form-control" name="worst_concave_points" required>
-            </div>
-            <div class="form-group">
-                <label>Worst Symmetry</label>
-                <input type="text" class="form-control" name="worst_symmetry" required>
-            </div>
-            <div class="form-group">
-                <label>Worst Fractal Dimension</label>
-                <input type="text" class="form-control" name="worst_fractal_dimension" required>
-            </div>
-            <div class="form-group mt-3">
-                <button type="submit" class="btn-custom">Submit</button>
-            </div>
-        </form>
+        </div>
     </div>
+</div>
 
-    <!-- Optional JavaScript for Bootstrap -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 </body>
