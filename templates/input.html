@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Input Information- Input Data For Prediction</title>
+    <title>Input Data For Prediction- Cancer Recognition</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="apple-touch-icon" sizes="180x180" href="../static/ico/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../static/ico/favicon-32x32.png">
@@ -34,6 +34,8 @@
                 <div class="navbar-nav ms-auto">
                     <a href="/" class="nav-item nav-link">Home</a>
                     <a href="/our-team" class="nav-item nav-link">Our Team</a>
+                    <a href="/history" class="nav-item nav-link"><span class="text-purple"> {{ session.get("username") }}</span>'s
+                        History</a>
                     <a href="/logout" class="nav-item nav-link">Logout</a>
                 </div>
             </div>
@@ -43,9 +45,15 @@
 
 <div class="container mt-5">
     <br>
-    <h2>Enter Information</h2>
+    <br>
+    <div class="text-center mb-5">
+        <h5 class="mb-2 px-3 py-1 text-dark rounded-pill d-inline-block" style="border:2px solid #4F1E7B;">Input
+            Data</h5>
+        <h1 class="display-5 w-50 mx-auto mt-2 text-pink">Hello {{ session.get("username") }}!</h1>
+        <h2 class="display-5 w-50 mx-auto mt-1">Enter Information For Prediction</h2>
+    </div>
 
-    <!-- Flash messages for feedback -->
+
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
     <div class="mt-3">
@@ -274,8 +282,8 @@
                 </td>
                 <td class="col-4">
                     <div class="form-group mt-3 text-end">
-                        <button type="reset" class="btn btn-lg btn-custom">Reset</button>
-                        <button type="submit" class="btn btn-lg btn-custom">Submit</button>
+                        <button type="reset" class="btn btn-custom me-2">Reset</button>
+                        <button type="submit" class="btn btn-custom">Submit</button>
                     </div>
                 </td>
             </tr>

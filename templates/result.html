@@ -34,6 +34,9 @@
                 <div class="navbar-nav ms-auto">
                     <a href="/" class="nav-item nav-link">Home</a>
                     <a href="/our-team" class="nav-item nav-link">Our Team</a>
+                    <a href="/input" class="nav-item nav-link">Prediction</a>
+                    <a href="/history" class="nav-item nav-link"><span class="text-purple"> {{ session.get("username") }}</span>'s
+                        History</a>
                     <a href="/logout" class="nav-item nav-link">Logout</a>
                 </div>
             </div>
@@ -43,9 +46,14 @@
 
 <div class="container text-center">
     <br>
-    <h2>Results</h2>
-    <p class="lead">The Tumor is <strong>{{prediction.upper()}}<strong></p>
+    <br>
+    <div class="text-center mb-5">
+        <h5 class="mb-2 px-3 py-1 text-dark rounded-pill d-inline-block" style="border:2px solid #4F1E7B;">Results</h5>
+        <h1 class="display-5 w-50 mx-auto">Cancer Recognition Result</h1>
+    </div>
+    <br>
 
+    <p class="lead">The Tumor is <strong>{{prediction.upper()}}</strong></p>
 
     <div class="d-flex justify-content-center my-4">
         <div class="card mb-3" style="max-width: 50rem; border-radius: 10px; background-color: #f0f0f0;">
@@ -54,13 +62,13 @@
             </div>
             <div class="card-body text-center">
                 {% if prediction == "benign" %}
-                <p class="card-text" style="font-weight: normal;">
+                <p class="card-text" style="font-weight: normal;text-align: justify;">
                     Benign tumors typically do not spread to other parts of the body and are often monitored rather than
                     treated unless they cause discomfort or other issues. Regular check-ups and imaging (like mammograms
                     or ultrasounds) help in monitoring these conditions.
                 </p>
                 {% elif prediction == "malignant" %}
-                <p class="card-text" style="font-weight: normal;">
+                <p class="card-text" style="font-weight: normal;text-align: justify;">
                     Malignant tumors are cancerous and may be aggressive because they invade and damage surrounding
                     tissue. When a tumor is suspected to be malignant, the doctor will perform a biopsy to determine the
                     severity or aggressiveness of the tumor.
