@@ -2,4 +2,5 @@ flask
 flask-wtf
 secure-smtplib
 Flask-SQLAlchemy
-sklearn
+sscikit-learn
+email-validator
