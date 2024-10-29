@@ -6,75 +6,85 @@ from flask import (
     request,
     session,
     flash,
-    make_response,
 )
 from flask_wtf.csrf import CSRFProtect
-from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_sqlalchemy import SQLAlchemy 
+from forms import UserForm, LoginForm 
+from captcha.image import ImageCaptcha
+from ML.model import predict_diabetes 
 import os
+import random
+import string
+from datetime import datetime
+import pandas as pd
 from functools import wraps
-from forms import UserForm, LoginForm, OTPForm
-from OTP import send_code
-from model import cancer_prediction
+
 
 app = Flask(__name__)
 csrf = CSRFProtect(app)
 app.config["SECRET_KEY"] = os.urandom(12)
 
-
-# Database configuration
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///database.db"
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+# Configure SQLite Database with SQLAlchemy
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
-from datetime import datetime
 
-
-# User model
+# User Model for SQLAlchemy
 class User(db.Model):
     __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(100), nullable=False, unique=True)
-    password = db.Column(db.String(128), nullable=False)
-    result = db.relationship("userResult", backref="author", lazy=True)
+    username = db.Column(db.String(100), unique=True, nullable=False)
+    fullname = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), unique=True, nullable=False)
+    password = db.Column(db.String(200), nullable=False)
+    result = db.relationship("userResult", backref='author', lazy=True)
+
+    def __init__(self, fullname, username, email, password):
+        self.fullname = fullname
+        self.username = username
+        self.email = email
+        self.password = generate_password_hash(password)  
 
 
 class userResult(db.Model):
     __tablename__ = "user_result"
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     id = db.Column(db.Integer, primary_key=True)
-    mean_radius = db.Column(db.Float, nullable=False)
-    mean_texture = db.Column(db.Float, nullable=False)
-    mean_perimeter = db.Column(db.Float, nullable=False)
-    mean_area = db.Column(db.Float, nullable=False)
-    mean_smoothness = db.Column(db.Float, nullable=False)
-    mean_compactness = db.Column(db.Float, nullable=False)
-    mean_concavity = db.Column(db.Float, nullable=False)
-    mean_concave_points = db.Column(db.Float, nullable=False)
-    mean_symmetry = db.Column(db.Float, nullable=False)
-    mean_fractal_dimension = db.Column(db.Float, nullable=False)
-    radius_se = db.Column(db.Float, nullable=False)
-    texture_se = db.Column(db.Float, nullable=False)
-    perimeter_se = db.Column(db.Float, nullable=False)
-    area_se = db.Column(db.Float, nullable=False)
-    smoothness_se = db.Column(db.Float, nullable=False)
-    compactness_se = db.Column(db.Float, nullable=False)
-    concavity_se = db.Column(db.Float, nullable=False)
-    concave_points_se = db.Column(db.Float, nullable=False)
-    symmetry_se = db.Column(db.Float, nullable=False)
-    fractal_dimension_se = db.Column(db.Float, nullable=False)
-    worst_radius = db.Column(db.Float, nullable=False)
-    worst_texture = db.Column(db.Float, nullable=False)
-    worst_perimeter = db.Column(db.Float, nullable=False)
-    worst_area = db.Column(db.Float, nullable=False)
-    worst_smoothness = db.Column(db.Float, nullable=False)
-    worst_compactness = db.Column(db.Float, nullable=False)
-    worst_concavity = db.Column(db.Float, nullable=False)
-    worst_concave_points = db.Column(db.Float, nullable=False)
-    worst_symmetry = db.Column(db.Float, nullable=False)
-    worst_fractal_dimension = db.Column(db.Float, nullable=False)
-
+    gender = db.Column(db.String(100), nullable=False)
+    age = db.Column(db.Integer, nullable=False)
+    bmi = db.Column(db.Float, nullable=False)
+    chol = db.Column(db.Float, nullable=False)
+    tg = db.Column(db.Float, nullable=False)
+    hdl = db.Column(db.Float, nullable=False)
+    ldl = db.Column(db.Float, nullable=False)
+    cr = db.Column(db.Float, nullable=False)
+    bun = db.Column(db.Float, nullable=False)
     result = db.Column(db.String(100), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+
+    def __init__(self, gender, age, bmi, chol, tg, hdl, ldl, cr, bun, result, user_id):
+        self.gender = gender
+        self.age = age
+        self.bmi = bmi
+        self.chol = chol
+        self.tg = tg
+        self.hdl = hdl
+        self.ldl = ldl
+        self.cr = cr
+        self.bun = bun
+        self.result = result
+        self.user_id = user_id
+
+
+# Create the database tables
+with app.app_context():
+    db.create_all()
+
+
+# Generate random CAPTCHA text
+def generate_random_captcha(length=6):
+    return ''.join(random.choice(string.ascii_uppercase) for _ in range(length))
 
 
 # Login required decorator
@@ -88,240 +98,260 @@ def login_required(f):
 
     return decorated_function
 
-
 # Routes
 @app.route("/")
 def home():
-    return render_template("index.html")
+    login_success = session.pop('login_success', None)
+    
+    user = None
+    if "username" in session:
+        user = User.query.filter_by(username=session["username"]).first()
+    
+    return render_template("index.html", user=user, login_success=login_success)
+
 
 
 @app.route("/our-team")
 def our_team():
     return render_template("our-team.html")
 
+@app.route("/our-activity")
+def our_activity():
+    return render_template("our-activity.html")  
+
+
+@app.route("/our-service")
+def our_service(): 
+    return render_template("our-service.html") 
+
+
+image = ImageCaptcha(width=260, height=80)
+
+@app.route("/captcha")
+def captcha():
+    captcha_text = generate_random_captcha()
+    session['captcha'] = captcha_text
+    image_file = os.path.join('static', 'img', 'CAPTCHA.png')
+    image.write(captcha_text, image_file)
+    return app.send_static_file('img/CAPTCHA.png')
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
     form = UserForm()
     if form.validate_on_submit():
+        if form.captcha.data != session.get('captcha'):
+            flash("Invalid CAPTCHA. Please try again.", "danger")
+            session.pop('captcha', None)
+            return redirect(url_for("register"))
+
+        fullname = form.fullname.data
         username = form.username.data
         email = form.email.data
         password = form.password.data
 
         if User.query.filter_by(username=username).first():
-            flash("Username already taken, please choose another one.", "warning")
+            flash("Username already taken, please choose a different one.", "danger")
             return redirect(url_for("register"))
 
-        session["username"] = username
-        session["email"] = email
-        session["password"] = password
-        otp_code = send_code(email)
-        resp = make_response(redirect(url_for("otp")))
-        resp.set_cookie("otp_code", str(otp_code))
-        return resp
+        if User.query.filter_by(email=email).first():
+            flash("Email already registered, please use a different one.", "danger")
+            return redirect(url_for("register"))
+
+        new_user = User(fullname=fullname, username=username, email=email, password=password)
+        db.session.add(new_user)
+        db.session.commit()
+
+        flash("Successfully registered! Please log in.", "success")
+        return redirect(url_for("login"))
+
+    if form.errors:
+        for field, errors in form.errors.items():
+            for error in errors:
+                flash(f"Error in {field}: {error}", "danger")
 
     return render_template("register.html", form=form)
-
-
-# OTP validation function
-def otp_code_isvalid(code):
-    encrypted_otp_code = request.cookies.get("otp_code")
-    return encrypted_otp_code and int(encrypted_otp_code) == code
-
-
-@app.route("/otp", methods=["GET", "POST"])
-def otp():
-    form = OTPForm()
-    if form.validate_on_submit():
-        code = int(f"{form.otp1.data}{form.otp2.data}{form.otp3.data}{form.otp4.data}")
-
-        if otp_code_isvalid(code):
-            username = session.get("username")
-            email = session.get("email")
-            password = session.get("password")
-
-            if username and password and email:
-                hashed_password = generate_password_hash(password)
-                new_user = User(username=username, password=hashed_password)
-                db.session.add(new_user)
-                db.session.commit()
-
-                session.pop("username", None)
-                session.pop("password", None)
-                session.pop("email", None)
-
-                flash("Registration successful! You can now log in.", "success")
-                return redirect(url_for("login"))
-        else:
-            flash("Invalid OTP code. Please try again.", "danger")
-
-    return render_template("otp.html", form=form)
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
+        if form.captcha.data != session.get('captcha'):
+            flash("Invalid CAPTCHA. Please try again.", "danger")
+            return redirect(url_for("login"))
+
+        session.pop('captcha', None)
+
         username = form.username.data
         password = form.password.data
+
         user = User.query.filter_by(username=username).first()
-
         if user and check_password_hash(user.password, password):
+            session["user_id"] = user.id
             session["username"] = user.username
-            flash("Login successful!", "success")
-            return redirect(url_for("input"))
+            session['login_success'] = True  
+            return redirect(url_for("profile"))
         else:
-            flash("Invalid username or password.", "danger")
+            flash("Invalid username or password", "danger")
 
+    if form.errors:
+        for field, errors in form.errors.items():
+            for error in errors:
+                flash(f"Error in {field}: {error}", "danger")
     return render_template("login.html", form=form)
 
 
 @app.route("/logout")
 @login_required
 def logout():
-    session.clear()
-    flash("You have been logged out.", "success")
+    session.pop("user_id", None)
+    session.pop("username", None)
+    flash("You have been logged out.", "success")  
     return redirect(url_for("login"))
 
 
-@app.route("/input", methods=["GET", "POST"])
+@app.route("/profile")
 @login_required
-def input():
-    current_user = User.query.filter_by(username=session["username"]).first()
+def profile():
+    if "user_id" not in session:
+        flash("Please log in to view this page", "warning")
+        return redirect(url_for("login"))
+
+    user = User.query.get(session["user_id"])
+    return render_template("profile.html", user=user)
+
+@app.route("/edit_profile", methods=["GET", "POST"])
+def edit_profile():
+    if "user_id" not in session:
+        flash("Please log in to view this page", "warning")
+        return redirect(url_for("login"))
+
+    user = User.query.get(session["user_id"])
+
     if request.method == "POST":
-        mean_radius = float(request.form["mean_radius"])
-        mean_texture = float(request.form["mean_texture"])
-        mean_perimeter = float(request.form["mean_perimeter"])
-        mean_area = float(request.form["mean_area"])
-        mean_smoothness = float(request.form["mean_smoothness"])
-        mean_compactness = float(request.form["mean_compactness"])
-        mean_concavity = float(request.form["mean_concavity"])
-        mean_concave_points = float(request.form["mean_concave_points"])
-        mean_symmetry = float(request.form["mean_symmetry"])
-        mean_fractal_dimension = float(request.form["mean_fractal_dimension"])
-        radius_se = float(request.form["radius_se"])
-        texture_se = float(request.form["texture_se"])
-        perimeter_se = float(request.form["perimeter_se"])
-        area_se = float(request.form["area_se"])
-        smoothness_se = float(request.form["smoothness_se"])
-        compactness_se = float(request.form["compactness_se"])
-        concavity_se = float(request.form["concavity_se"])
-        concave_points_se = float(request.form["concave_points_se"])
-        symmetry_se = float(request.form["symmetry_se"])
-        fractal_dimension_se = float(request.form["fractal_dimension_se"])
-        worst_radius = float(request.form["worst_radius"])
-        worst_texture = float(request.form["worst_texture"])
-        worst_perimeter = float(request.form["worst_perimeter"])
-        worst_area = float(request.form["worst_area"])
-        worst_smoothness = float(request.form["worst_smoothness"])
-        worst_compactness = float(request.form["worst_compactness"])
-        worst_concavity = float(request.form["worst_concavity"])
-        worst_concave_points = float(request.form["worst_concave_points"])
-        worst_symmetry = float(request.form["worst_symmetry"])
-        worst_fractal_dimension = float(request.form["worst_fractal_dimension"])
+        user.fullname = request.form["fullname"]
+        user.email = request.form["email"]
+        db.session.commit()
+        flash("Profile updated successfully!", "success")
+        return redirect(url_for("profile"))
 
-        features = [
-            mean_radius,
-            mean_texture,
-            mean_perimeter,
-            mean_area,
-            mean_smoothness,
-            mean_compactness,
-            mean_concavity,
-            mean_concave_points,
-            mean_symmetry,
-            mean_fractal_dimension,
-            radius_se,
-            texture_se,
-            perimeter_se,
-            area_se,
-            smoothness_se,
-            compactness_se,
-            concavity_se,
-            concave_points_se,
-            symmetry_se,
-            fractal_dimension_se,
-            worst_radius,
-            worst_texture,
-            worst_perimeter,
-            worst_area,
-            worst_smoothness,
-            worst_compactness,
-            worst_concavity,
-            worst_concave_points,
-            worst_symmetry,
-            worst_fractal_dimension,
-        ]
+    return render_template("edit_profile.html", user=user)
 
-        prediction = cancer_prediction(features)
+@app.route("/input", methods=["GET", "POST"])
+@csrf.exempt 
+def input():
+    if "user_id" not in session:
+        flash("Please log in to access this page.", "warning")
+        return redirect(url_for("login"))
+    
+    current_user = User.query.filter_by(username=session["username"]).first()
+    
+    if request.method == "POST":
+        gender = request.form["gender"]
+        age = int(request.form["age"])
+        bmi = float(request.form["bmi"])
+        chol = float(request.form["chol"])
+        tg = float(request.form["tg"])
+        hdl = float(request.form["hdl"])
+        ldl = float(request.form["ldl"])
+        cr = float(request.form["cr"])
+        bun = float(request.form["bun"])
 
-        # Create a new record in the userResult table with all the inputs
+        Inputs = pd.DataFrame({
+            'Gender': [gender],  
+            'Age': [age],        
+            'BMI': [bmi],        
+            'Chol': [chol],      
+            'TG': [tg],          
+            'HDL': [hdl],        
+            'LDL': [ldl],        
+            'Cr': [cr],          
+            'BUN': [bun]         
+        })
+   
+        result = predict_diabetes(Inputs)
+
+        if result == 1:  
+            message = "Yes, your test results indicate a high likelihood of diabetes. Please consult your healthcare provider as soon as possible for a proper diagnosis and to discuss next steps. Early detection and management are crucial for your health."
+        else:  
+            message = "No, your test results do not indicate diabetes at this time. However, it's important to maintain a healthy lifestyle and continue regular check-ups with your healthcare provider. If you have any concerns, don't hesitate to consult a medical professional."
+
         new_result = userResult(
-            mean_radius=mean_radius,
-            mean_texture=mean_texture,
-            mean_perimeter=mean_perimeter,
-            mean_area=mean_area,
-            mean_smoothness=mean_smoothness,
-            mean_compactness=mean_compactness,
-            mean_concavity=mean_concavity,
-            mean_concave_points=mean_concave_points,
-            mean_symmetry=mean_symmetry,
-            mean_fractal_dimension=mean_fractal_dimension,
-            radius_se=radius_se,
-            texture_se=texture_se,
-            perimeter_se=perimeter_se,
-            area_se=area_se,
-            smoothness_se=smoothness_se,
-            compactness_se=compactness_se,
-            concavity_se=concavity_se,
-            concave_points_se=concave_points_se,
-            symmetry_se=symmetry_se,
-            fractal_dimension_se=fractal_dimension_se,
-            worst_radius=worst_radius,
-            worst_texture=worst_texture,
-            worst_perimeter=worst_perimeter,
-            worst_area=worst_area,
-            worst_smoothness=worst_smoothness,
-            worst_compactness=worst_compactness,
-            worst_concavity=worst_concavity,
-            worst_concave_points=worst_concave_points,
-            worst_symmetry=worst_symmetry,
-            worst_fractal_dimension=worst_fractal_dimension,
-            result=prediction,
-            user_id=current_user.id,
+            gender=gender,
+            age=age,
+            bmi=bmi,
+            chol=chol,
+            tg=tg,
+            hdl=hdl,
+            ldl=ldl,
+            cr=cr,
+            bun=bun,
+            result=message,  
+            user_id=current_user.id
         )
         db.session.add(new_result)
         db.session.commit()
 
-        return render_template("result.html", prediction=prediction)
+        flash("Input submitted successfully!", "success")
+        return redirect(url_for("result"))  
 
-    return render_template("input.html")
+    return render_template("predicting-diabetes.html")
+
+@app.route("/result")
+def result():
+    if "user_id" not in session:
+        flash("Please log in to access this page.", "warning")
+        return redirect(url_for("login"))
+
+    current_user = User.query.filter_by(username=session["username"]).first()
+    
+    prediction = (
+        db.session.query(userResult)
+        .filter_by(user_id=current_user.id)
+        .order_by(userResult.timestamp.desc())  
+        .first()
+    )
+
+    if prediction:
+        return render_template("result.html", 
+            gender=prediction.gender,
+            age=prediction.age,
+            bmi=prediction.bmi,
+            chol=prediction.chol,
+            tg=prediction.tg,
+            hdl=prediction.hdl,
+            ldl=prediction.ldl,
+            cr=prediction.cr,
+            bun=prediction.bun,
+            prediction=prediction.result  
+        )
+
+    flash("No prediction found.", "warning")
+    return redirect(url_for("input"))  
 
 
 @app.route("/history")
 @login_required
 def history():
+    if "user_id" not in session:
+        flash("Please log in to access this page.", "warning")
+        return redirect(url_for("login"))
+        
     current_user = User.query.filter_by(username=session["username"]).first()
-
-    # all previous predictions for the logged-in user
     predictions = userResult.query.filter_by(user_id=current_user.id).all()
 
     return render_template("history.html", predictions=predictions)
 
 
-@app.route("/result")
-@login_required
-def result():
-    current_user = User.query.filter_by(username=session["username"]).first()
-    prediction = (
-        db.session.query(userResult.result).filter_by(id=current_user.id).first()[0]
-    )
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template("404.html"), 404
 
-    return render_template("result.html", prediction=prediction)
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template("500.html"), 500
 
 
 if __name__ == "__main__":
-    # Create database
-    with app.app_context():
-        db.create_all()
     app.run(debug=True, port=5000)
