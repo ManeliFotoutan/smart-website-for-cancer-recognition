@@ -2,151 +2,247 @@
 <html lang="en">
 
 <head>
-    <title>Login - Cancer Recognition</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="apple-touch-icon" sizes="180x180" href="../static/ico/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="../static/ico/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../static/ico/favicon-16x16.png">
-    <link rel="manifest" href="../static/ico/site.webmanifest">
+    <meta charset="utf-8">
+    <title>ml0ps lab - History of Predicting Diabetes</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- Favicon -->
+    <link href="ico/favicon-48x48.png" rel="icon" sizes="48x48" type="image/png"/>
+    <link href="ico/favicon.svg" rel="icon" type="image/svg+xml"/>
+    <link href="ico/favicon.ico" rel="shortcut icon"/>
+    <link href="ico/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+    <link href="ico/site.webmanifest" rel="manifest"/>
+
+    <!-- Google Web Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&family=Roboto:wght@400;700&display=swap"
+          rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet"/>
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
     <link href="../static/css/style.css" rel="stylesheet">
 </head>
 
 <body>
 
-<div class="container-fluid bg-light sticky-top">
+<!-- Navbar Start -->
+<div class="container-fluid sticky-top bg-white shadow-sm">
     <div class="container">
-        <nav class="navbar navbar-expand-lg bg-light navbar-light py-2 py-lg-0">
-            <a href="/" class="navbar-brand1">
-                <img class="img img-fluid" src="static/img/Filoger.png" alt="Logo">
+        <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0">
+            <a class="navbar-brand" href="/">
+                <img src="../static/img/logo.png" width="310">
             </a>
-            <a href="/" class="navbar-brand2">
-                <img class="img img-fluid" src="static/img/CancerRecognition.png" alt="Logo">
-            </a>
-            <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
-                    data-bs-target="#navbarCollapse">
+            <button class="navbar-toggler" data-bs-target="#navbarCollapse" data-bs-toggle="collapse" type="button">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav ms-auto">
-                    <a href="/" class="nav-item nav-link">Home</a>
-                    <a href="/our-team" class="nav-item nav-link">Our Team</a>
-                    <a href="/input" class="nav-item nav-link">Prediction</a>
-<a href="/history" class="nav-item nav-link"><span class="text-purple"> {{ session.get("username") }}</span>'s History</a>
-                    <a href="/logout" class="nav-item nav-link">Logout</a>
+                <div class="navbar-nav ms-auto py-0">
+                    <a class="nav-item nav-link" href="/">Home</a>
+                    <a class="nav-item nav-link" href="/our-activity">Our Activity</a>
+                    <div class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#">Our Service</a>
+                        <div class="dropdown-menu m-0">
+                            <a class="dropdown-item" href="https://cancer-app-330162519967.europe-west3.run.app/"><span
+                                    class="fa fa-angle-right me-2"></span>Predicting Cancer</a>
+                            <a class="dropdown-item" href="/input"><span
+                                    class="fa fa-angle-right me-2"></span>Predicting
+                                Diabetes <span class="text-danger">[ new ]</span></a>
+                            <a class="dropdown-item text-decoration-line-through" href="#">[soon] Predicting Hematologic
+                                Diseases (soon)</a>
+                            <a class="dropdown-item text-decoration-line-through" href="#">[soon] Predicting Chronic
+                                Myelogenous Leukemia (CML)</a>
+                            <a class="dropdown-item text-decoration-line-through" href="#">[soon] Predicting Acute
+                                Lymphoblastic Leukemia (ALL)</a>
+                            <a class="dropdown-item text-decoration-line-through" href="#">[soon] Predicting Chronic
+                                Obstructive Pulmonary Disease (COPD)</a>
+                            <a class="dropdown-item text-decoration-line-through" href="#">[soon] Predicting Heart
+                                Failure</a>
+                            <a class="dropdown-item text-decoration-line-through" href="#">[soon] Predicting
+                                Cardiovascular Diseases</a>
+                            <a class="dropdown-item text-decoration-line-through" href="#">[soon] Predicting
+                                Inflammatory Conditions</a>
+                            <a class="dropdown-item text-decoration-line-through" href="#">[soon] Predicting Kidney
+                                Disease</a>
+                            <a class="dropdown-item text-decoration-line-through" href="#">[soon] Predicting Liver
+                                Disease</a>
+                            <a class="dropdown-item text-decoration-line-through" href="#">[soon] Predicting Thyroid
+                                Disorders</a>
+                            <a class="dropdown-item text-decoration-line-through" href="#">[soon] Predicting
+                                Hemoglobinopathies Diseases</a>
+                            <a class="dropdown-item text-decoration-line-through" href="#">[soon] Predicting Autoimmune
+                                Diseases</a>
+                            <a class="dropdown-item text-decoration-line-through" href="#">[soon] Predicting Hepatitis
+                                Diseases</a>
+                            <a class="dropdown-item text-decoration-line-through" href="#">[soon] Predicting Cognitive
+                                Decline</a>
+                            <a class="dropdown-item text-decoration-line-through" href="#">[soon] Predicting Gout</a>
+                            <a class="dropdown-item text-decoration-line-through" href="#">[soon] Predicting Vitamin
+                                Deficiencies</a>
+                        </div>
+                    </div>
+                    <a class="nav-item nav-link" href="/our-team">Our Team</a>
+                    <a class="nav-item nav-link" href="/profile">My Profile</a>
+                    <a class="nav-item nav-link active" href="/history">My History</a>
+                    <a class="nav-item nav-link" href="/logout">Sign out</a>
                 </div>
             </div>
         </nav>
     </div>
 </div>
+<!-- Navbar End -->
 
-<div class="container mt-5">
-    <br>
-    <br>
-    <div class="text-center mb-5">
-        <h5 class="mb-2 px-3 py-1 text-dark rounded-pill d-inline-block" style="border:2px solid #4F1E7B;">History</h5>
-        <h1 class="display-5 w-50 mx-auto">Your Prediction History</h1>
-    </div>
 
-    {% if predictions %}
-    <table class="table table-hover">
-        <thead>
-        <tr>
-            <th>Date</th>
-            <th>Mean Radius</th>
-            <th>Mean Texture</th>
-            <th>Mean Perimeter</th>
-            <th>Mean Area</th>
-            <th>Mean Smoothness</th>
-            <th>Prediction Result</th>
-        </tr>
-        </thead>
-        <tbody>
-
-        {% for prediction in predictions %}
-        <tr>
-            <td>{{ prediction.timestamp }}</td>
-            <td>{{ prediction.mean_radius }}</td>
-            <td>{{ prediction.mean_texture }}</td>
-            <td>{{ prediction.mean_perimeter }}</td>
-            <td>{{ prediction.mean_area }}</td>
-            <td>{{ prediction.mean_smoothness }}</td>
-            <td>{{ prediction.result }}</td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    {% else %}
-    <p>No prediction history available.</p>
-    {% endif %}
-
-    <div style="text-align: center">
-        <a class="btn btn-custom" href="{{ url_for('input') }}">Make a New Prediction</a>
+<!-- Sldie Start -->
+<div class="container-fluid bg-primary py-5 slide-header">
+    <div class="container py-5">
+        <div class="row justify-content-start">
+            <div class="col-lg-6 text-center text-lg-start">
+                <h5 class="d-inline-block text-danger text-uppercase border-bottom border-5"
+                    style="border-color: rgba(256, 256, 256, .3) !important;">M10PS lab</h5>
+                <h2 class="display-1 text-white mb-md-4">History Predicating</h2>
+            </div>
+        </div>
     </div>
 </div>
+<!-- Slide End -->
 
-<div class="container-fluid footer position-relative bg-dark text-white-50 mt-5 pt-5 pb-4">
-    <div class="container">
-        <div class="row g-5 py-1">
-            <div class="col-lg-6 pe-lg-5">
-                <a href="index.html" class="navbar-brand">
-                    <h1 class="h1 text-light mb-0">Cancer Recognition <span
-                            class="text-pink display-6">| Filoger</span></h1>
-                </a>
-                <p class="fs-5 mb-4" style="text-align: justify;">
-                    At m10ps group, we are dedicated to advancing cancer detection through innovative machine learning
-                    solutions. Our mission is to empower individuals with accurate and timely health insights. Together,
-                    we can make a difference in the fight against cancer.
-                </p>
-            </div>
-            <div class="col-lg-6 ps-lg-5">
-                <div class="row g-5">
-                    <div class="col-sm-6">
-                        <h4 class="text-pink mb-4">Quick Links</h4>
-                        <a class="btn btn-link" href="/">Home</a>
-                        <a class="btn btn-link" href="/about-us">About Us</a>
-                        <a class="btn btn-link" href="/our-team">Our Team</a>
-                        <a class="btn btn-link" href="/login">login</a>
-                        <a class="btn btn-link" href="/register">Register</a>
-                    </div>
-                    <div class="col-sm-6">
-                        <h4 class="text-pink mb-4">m10ps Info</h4>
-                        <p><i class="fa fa-map-marker-alt me-2"></i>Tehran, Iran</p>
-                        <p><i class="fa fa-phone-alt me-2"></i>+98 2134567890</p>
-                        <p><i class="fa fa-envelope me-2"></i>mlops@m10px.com</p>
-                        <div class="d-flex mt-4">
-                            <a class="btn rounded btn-custom me-1" href="https://t.me/m10ps"><i
-                                    class="fa fa-paper-plane"></i></a>
-                            <a class="btn rounded btn-custom me-1" href="#"><i
-                                    class="fab fa-linkedin-in"></i></a>
-                            <a class="btn rounded btn-custom me-1" href="#"><i class="fab fa-kaggle"></i></a>
-                            <a class="btn rounded btn-custom me-1"
-                               href="https://github.com/ManeliFotoutan/smart-website-for-cancer-recognition"><i
-                                    class="fab fa-github"></i></a>
-                        </div>
+<!-- History of Predicting Diabetes Data Information Start -->
+<div class="container-fluid">
+    <div class="container py-5">
+        <div class="text-center">
+            <h5 class="mb-2 px-3 py-1 text-dark rounded-pill d-inline-block" style="border:2px solid #4F1E7B;">History of Predicting Diabetes</h5>
+        </div>
+        <div class="row gx-5">
+            <div class="col-lg-12">
+                <div class="bg-white text-center rounded p-5">
+                    <div class="table-responsive">
+                        <table id="historyTable" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Date/Time</th>
+                                    <th>BMI</th>
+                                    <th>Cholesterol</th>
+                                    <th>Triglycerides</th>
+                                    <th>HDL</th>
+                                    <th>LDL</th>
+                                    <th>Creatinine</th>
+                                    <th>BUN</th>
+                                    <th>Result Diabetes</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for prediction in predictions %}
+                                <tr>
+                                    <td>{{ prediction.timestamp }}</td>  <!-- Ensure this matches your timestamp field -->
+                                    <td>{{ prediction.bmi }}</td>
+                                    <td>{{ prediction.chol }}</td>
+                                    <td>{{ prediction.tg }}</td>
+                                    <td>{{ prediction.hdl }}</td>
+                                    <td>{{ prediction.ldl }}</td>
+                                    <td>{{ prediction.cr }}</td>
+                                    <td>{{ prediction.bun }}</td>
+                                    <td>{{ prediction.result }}</td>  <!-- Assuming this is the diabetes result message -->
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<!-- History of Predicting Diabetes Data Information End -->
 
-<div class="container-fluid copyright text-white-50 py-1">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 text-center">
-                <p class="mb-0">&copy; 2024 m10ps Group - All Rights Reserved.</p>
+
+<!-- Footer Start -->
+<div class="container-fluid footer bg-dark text-light pt-5">
+    <div class="container pb-5">
+        <div class="row g-5">
+            <div class="col-lg-6 col-md-6">
+                <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
+                    M10PS Laboratory</h4>
+                <p class="mb-4" style="text-align: justify;">
+                    At M10px Laboratory, we are committed to revolutionizing healthcare through advanced AI and machine
+                    learning technologies. Our innovative solutions empower individuals and healthcare professionals to
+                    predict and manage various health conditions effectively. With a focus on early detection and
+                    personalized care, we strive to enhance health outcomes and improve lives. Join us on our journey
+                    toward a healthier future. Feel free to adjust any part of the text to better align with your
+                    brand's voice!
+                </p>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
+                    Quick Links</h4>
+                <div class="d-flex flex-column justify-content-start">
+                    <a class="text-light mb-2" href="/index"><i class="fa fa-angle-right me-2"></i>Home</a>
+                    <a class="text-light mb-2" href="/our-activity"><i class="fa fa-angle-right me-2"></i>Profile</a>
+                    <a class="text-light mb-2" href="/our-service"><i class="fa fa-angle-right me-2"></i>Our
+                        Services</a>
+                    <a class="text-light mb-2" href="/our-team"><i class="fa fa-angle-right me-2"></i>Our Team</a>
+                    <a class="text-light mb-2" href="/login"><i class="fa fa-angle-right me-2"></i>Sign In</a>
+                    <a class="text-light" href="/register"><i class="fa fa-angle-right me-2"></i>Sign up</a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <h4 class="d-inline-block text-primary text-uppercase border-bottom border-5 border-secondary mb-4">
+                    Contact Us</h4>
+                <p class="mb-2"><i class="fa fa-map-marker-alt text-primary me-3"></i>Tehran, Iran</p>
+                <p class="mb-2"><i class="fa fa-envelope text-primary me-3"></i>mlops@m10ps.com</p>
+                <p class="mb-0"><i class="fa fa-phone-alt text-primary me-3"></i>+98 2134567890</p>
+                <h6 class="text-primary text-uppercase mt-4 mb-3">Follow Us</h6>
+                <div class="d-flex">
+
+                    <a class="btn btn-primary btn-square rounded-circle me-2" href="https://t.me/m10ps"><i
+                            class="fa fa-paper-plane"></i></a>
+                    <a class="btn btn-primary btn-square rounded-circle me-2" href="#"><i
+                            class="fab fa-linkedin-in"></i></a>
+                    <a class="btn btn-primary btn-square rounded-circle me-2" href="#"><i
+                            class="fab fa-kaggle"></i></a>
+
+                    <a class="btn btn-primary btn-square rounded-circle" href="#"><i
+                            class="fab fa-github"></i></a>
+                </div>
             </div>
         </div>
     </div>
 </div>
+<div class="container-fluid bg-dark text-light border-top border-secondary py-2">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-md-12 text-center text-md-center">
+                <p class="mb-0 text-lig">&copy; 2024 m10ps Group - All Rights Reserved.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Footer End -->
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+
+<!-- Back to Top -->
+<a class="btn btn-lg btn-primary btn-lg-square back-to-top" href="#"><i class="bi bi-arrow-up"></i></a>
+
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/tempusdominus/js/moment.min.js"></script>
+<script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+<script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+<!-- Template Javascript -->
+<script src="js/main.js"></script>
 </body>
+
 </html>
